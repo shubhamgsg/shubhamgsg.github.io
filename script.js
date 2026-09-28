@@ -1,5 +1,3 @@
-/Users/gsg/.zprofile:9: no such file or directory: /usr/local/bin/brew
-/Users/gsg/.zprofile:10: no such file or directory: /usr/local/bin/brew
 const root = document.documentElement;
 const versionButtons = [...document.querySelectorAll('[data-version-choice]')];
 const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
