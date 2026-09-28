@@ -1,3 +1,5 @@
+/Users/gsg/.zprofile:9: no such file or directory: /usr/local/bin/brew
+/Users/gsg/.zprofile:10: no such file or directory: /usr/local/bin/brew
 <!doctype html>
 <html lang="en">
 <head>
@@ -10,6 +12,7 @@
   <meta property="og:description" content="Automation, API validation, backend testing, and thoughtful software quality.">
   <title>Shubham Gupta | Senior Automation Engineer</title>
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <script>document.documentElement.dataset.version=localStorage.getItem('portfolio-version')||'interactive';</script>
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -17,8 +20,12 @@
   <header class="site-header">
     <div class="container nav-wrap">
       <a class="brand" href="#top" aria-label="Shubham Gupta, back to top"><span class="brand-mark">SG<span>.</span></span><span class="brand-name">SHUBHAM GUPTA</span></a>
+      <div class="version-switch" role="group" aria-label="Portfolio version">
+        <button type="button" data-version-choice="classic" aria-pressed="false">Classic</button>
+        <button type="button" data-version-choice="interactive" aria-pressed="true">Interactive</button>
+      </div>
       <nav aria-label="Main navigation">
-        <a href="#about">About</a><a href="#experience">Experience</a><a href="#projects">Projects</a><a href="#skills">Skills</a><a class="nav-contact" href="#contact">Let's connect <span aria-hidden="true">↗</span></a>
+        <a href="#about">About</a><a class="interactive-only" href="#playground">Playground</a><a href="#experience">Experience</a><a href="#projects">Projects</a><a href="#skills">Skills</a><a class="nav-contact" href="#contact">Let's connect <span aria-hidden="true">↗</span></a>
       </nav>
     </div>
   </header>
@@ -36,7 +43,7 @@
           </div>
           <div class="hero-meta"><span><i aria-hidden="true"></i> Open to new opportunities</span><span>QA Automation · SDET · Java</span></div>
         </div>
-        <div class="hero-art" aria-hidden="true">
+        <div class="hero-art classic-hero-art" aria-hidden="true">
           <div class="art-orbit orbit-one"></div><div class="art-orbit orbit-two"></div>
           <div class="art-card">
             <div class="art-card-top"><span class="dots"><b></b><b></b><b></b></span><span>QUALITY / ENGINEERING</span></div>
@@ -46,8 +53,20 @@
           <div class="art-chip chip-one">Selenium <span>↗</span></div><div class="art-chip chip-two">REST APIs <span>✓</span></div>
           <span class="art-plus plus-one">+</span><span class="art-plus plus-two">+</span>
         </div>
+        <div class="quality-lab interactive-only" aria-label="Interactive release quality simulation">
+          <div class="lab-top"><span><span class="dots" aria-hidden="true"><b></b><b></b><b></b></span> QUALITY LAB</span><span>INTERACTIVE DEMO</span></div>
+          <div class="lab-body">
+            <p class="lab-kicker">TRY THE TESTING MINDSET</p>
+            <h2>Would you ship this release?</h2>
+            <div class="lab-check"><span>01 / UI workflow</span><strong data-release-check="0">READY</strong></div>
+            <div class="lab-check"><span>02 / API response</span><strong data-release-check="1">READY</strong></div>
+            <div class="lab-check"><span>03 / Data integrity</span><strong data-release-check="2">READY</strong></div>
+            <div class="lab-actions"><button class="button button-primary" type="button" id="run-checks">Run checks <span aria-hidden="true">↗</span></button><button class="button button-outline" type="button" id="inject-bug" aria-pressed="false">Inject a bug</button></div>
+            <p class="lab-result" id="lab-result" aria-live="polite">Simulated checks. No real systems are connected.</p>
+          </div>
+        </div>
       </div>
-      <div class="container hero-bottom"><span>SCROLL TO EXPLORE</span><span class="down-arrow" aria-hidden="true">↓</span><span>01 / 05</span></div>
+      <div class="container hero-bottom"><span>SCROLL TO EXPLORE</span><span class="down-arrow" aria-hidden="true">↓</span><span>01 / <span class="classic-only">05</span><span class="interactive-only">06</span></span></div>
     </section>
 
     <section class="section about-section" id="about" aria-labelledby="about-title">
@@ -62,19 +81,41 @@
       </div>
     </section>
 
+    <section class="section playground-section interactive-only" id="playground" aria-labelledby="playground-title">
+      <div class="container">
+        <div class="section-heading playground-heading"><div><p class="section-kicker">02 / THINK LIKE A TESTER</p><h2 id="playground-title">Go ahead.<br><em>Try to break it.</em></h2></div><p>Two small experiments that show how I approach software quality.</p></div>
+        <div class="playground-grid">
+          <article class="play-card">
+            <span class="play-number">01 / API PLAYGROUND</span><h3>A good API knows when to say no.</h3><p>Try booking 1–6 seats. Then test zero, a negative number, or too many.</p>
+            <form id="booking-demo" novalidate><label for="seat-count">Number of seats</label><div class="request-row"><input id="seat-count" name="seats" type="text" inputmode="numeric" value="2" autocomplete="off"><button class="button button-primary" type="submit">Send request <span aria-hidden="true">↗</span></button></div></form>
+            <div class="request-presets" aria-label="Example requests"><button type="button" data-seats="2">Valid: 2</button><button type="button" data-seats="0">Zero seats</button><button type="button" data-seats="7">Over limit</button><button type="button" data-seats="-1">Negative</button></div>
+            <pre class="api-response" id="api-response" aria-live="polite">POST /demo/bookings
+{ "seats": 2 }
+
+Ready to send a simulated request.</pre>
+          </article>
+          <article class="play-card">
+            <span class="play-number">02 / THE TESTER'S INSTINCT</span><h3>The happy path isn't the whole story.</h3><p>A booking works when you click once. Which test would best expose duplicate bookings?</p>
+            <div class="test-choices" role="group" aria-label="Choose a test"><button type="button" data-test-answer="0" aria-pressed="false">Check the button's color</button><button type="button" data-test-answer="1" aria-pressed="false">Submit the same request twice</button><button type="button" data-test-answer="2" aria-pressed="false">Change the page title</button></div>
+            <p class="choice-result" id="choice-result" aria-live="polite">Pick a test to see the reasoning.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
     <section class="section experience-section" id="experience" aria-labelledby="experience-title">
-      <div class="container"><div class="section-heading"><div><p class="section-kicker">02 / THE JOURNEY</p><h2 id="experience-title">Experience<span class="period">.</span></h2></div><p>Across QA engineering, cloud support, and backend development.</p></div>
+      <div class="container"><div class="section-heading"><div><p class="section-kicker"><span class="classic-only">02</span><span class="interactive-only">03</span> / THE JOURNEY</p><h2 id="experience-title">Experience<span class="period">.</span></h2></div><p>Across QA engineering, cloud support, and backend development.</p></div>
         <div class="timeline">
           <article class="timeline-item"><div class="timeline-date">NOV 2024 — PRESENT</div><div class="timeline-content"><div class="role-line"><h3>Senior Automation Specialist</h3><span class="current-badge">CURRENT ROLE</span></div><p class="organization">Airtel Africa · via OpsTree Solutions</p><p>Supporting Airtel Money across African markets. Developing Java/Selenium test suites for functional, regression, and smoke testing; validating REST APIs with Postman and checking business data using SQL.</p><div class="tag-row"><span>Java</span><span>Selenium</span><span>TestNG</span><span>API testing</span><span>SQL</span></div></div></article>
           <article class="timeline-item"><div class="timeline-date">DEC 2019 — JUL 2020</div><div class="timeline-content"><h3>Cloud Support Associate</h3><p class="organization">Amazon Web Services</p><p>Helped enterprise customers troubleshoot production networking and infrastructure issues across VPC, EC2, Route 53, Elastic Load Balancing, and CloudWatch.</p><div class="tag-row"><span>AWS</span><span>Networking</span><span>Root cause analysis</span></div></div></article>
           <article class="timeline-item"><div class="timeline-date">JUL 2018 — NOV 2019</div><div class="timeline-content"><h3>QA Engineer</h3><p class="organization">Protiviti Consulting Pvt. Ltd.</p><p>Designed manual and automated test scenarios for enterprise web applications, wrote Selenium scripts in Java, validated data with SQL, and reported defects.</p><div class="tag-row"><span>Java</span><span>Selenium</span><span>SQL</span></div></div></article>
         </div>
-        <p class="career-note"><strong>Career path:</strong> Between August 2020 and October 2024, I prepared for the UPSC Civil Services Examination before returning to technology in November 2024.</p>
+        <p class="career-note"><strong>Career note:</strong> Prepared for the UPSC Civil Services Examination (Aug 2020–Oct 2024); returned to technology in Nov 2024.</p>
       </div>
     </section>
 
     <section class="section projects-section" id="projects" aria-labelledby="projects-title">
-      <div class="container"><div class="section-heading"><div><p class="section-kicker">03 / THINGS I'VE BUILT</p><h2 id="projects-title">Selected projects<span class="period">.</span></h2></div><p>Backend projects that inform how I test.</p></div>
+      <div class="container"><div class="section-heading"><div><p class="section-kicker"><span class="classic-only">03</span><span class="interactive-only">04</span> / THINGS I'VE BUILT</p><h2 id="projects-title">Selected projects<span class="period">.</span></h2></div><p>Backend projects that inform how I test.</p></div>
         <div class="project-grid">
           <article class="project-card"><div class="project-head"><span class="project-number">01 / BACKEND APPLICATION</span><a class="project-symbol" href="https://github.com/shubhamgsg/MovieBookingApplication" target="_blank" rel="noopener noreferrer" aria-label="View Movie Booking Application on GitHub">↗</a></div><div class="project-graphic graphic-movie" aria-hidden="true"><span class="movie-frame"><span>▶</span></span><span class="graphic-lines"></span></div><h3>Movie Booking Application</h3><p>A Spring Boot application for movie and booking workflows, structured around controller and service layers. Includes REST APIs, input validation, and exception handling.</p><div class="tag-row"><span>Spring Boot</span><span>REST API</span><span>Java</span></div></article>
           <article class="project-card"><div class="project-head"><span class="project-number">02 / REST API</span><a class="project-symbol" href="https://github.com/shubhamgsg/EventManagementAPI" target="_blank" rel="noopener noreferrer" aria-label="View Event Management API on GitHub">↗</a></div><div class="project-graphic graphic-event" aria-hidden="true"><span class="calendar-art"><b></b><i></i><i></i><i></i><i></i><i></i><i></i></span><span class="graphic-lines"></span></div><h3>Event Management API</h3><p>CRUD APIs for event workflows using Spring Boot, Hibernate, and MySQL. Built with layered service and repository components, request validation, and exception handling.</p><div class="tag-row"><span>Spring Boot</span><span>Hibernate</span><span>MySQL</span></div></article>
@@ -83,11 +124,11 @@
       </div>
     </section>
 
-    <section class="section skills-section" id="skills" aria-labelledby="skills-title"><div class="container skills-layout"><div><p class="section-kicker">04 / MY TOOLKIT</p><h2 id="skills-title">Tools of<br><em>the trade.</em></h2><p class="skills-intro">A practical toolkit for reliable testing and backend development.</p></div><div class="skills-list"><div class="skill-group"><h3>Automation & testing</h3><p>Selenium WebDriver · Java · TestNG · Maven · Page Object Model · Functional & regression testing</p></div><div class="skill-group"><h3>API & databases</h3><p>Postman · REST APIs · JSON · SQL · MySQL · PostgreSQL (familiar)</p></div><div class="skill-group"><h3>Backend & delivery</h3><p>Spring Boot · Spring MVC · Spring Data JPA · Hibernate · Git · Jenkins · Jira</p></div><div class="skill-group"><h3>Cloud</h3><p>AWS EC2 · IAM · S3 · VPC · Route 53 · ELB · CloudWatch</p></div></div></div></section>
+    <section class="section skills-section" id="skills" aria-labelledby="skills-title"><div class="container skills-layout"><div><p class="section-kicker"><span class="classic-only">04</span><span class="interactive-only">05</span> / MY TOOLKIT</p><h2 id="skills-title">Tools of<br><em>the trade.</em></h2><p class="skills-intro">A practical toolkit for reliable testing and backend development.</p></div><div class="skills-list"><div class="skill-group"><h3>Automation & testing</h3><p>Selenium WebDriver · Java · TestNG · Maven · Page Object Model · Functional & regression testing</p></div><div class="skill-group"><h3>API & databases</h3><p>Postman · REST APIs · JSON · SQL · MySQL · PostgreSQL (familiar)</p></div><div class="skill-group"><h3>Backend & delivery</h3><p>Spring Boot · Spring MVC · Spring Data JPA · Hibernate · Git · Jenkins · Jira</p></div><div class="skill-group"><h3>Cloud</h3><p>AWS EC2 · IAM · S3 · VPC · Route 53 · ELB · CloudWatch</p></div></div></div></section>
 
     <section class="credentials" aria-label="Education, certification and volunteering"><div class="container credential-grid"><div><span class="credential-label">EDUCATION</span><h3>B.Tech, Computer Science & Engineering</h3><p>Pranveer Singh Institute of Technology, Kanpur · 2014–2018</p></div><div><span class="credential-label">CERTIFICATION</span><h3>AWS Certified Solutions Architect – Associate</h3><p>Amazon Web Services</p></div><div><span class="credential-label">COMMUNITY</span><h3>CovidUrgency Relief Initiative</h3><p>Helped build and maintain a resource website during the COVID-19 pandemic.</p></div></div></section>
 
-    <section class="contact-section" id="contact" aria-labelledby="contact-title"><div class="container contact-inner"><p class="section-kicker">05 / LET'S TALK</p><h2 id="contact-title">Have a quality challenge<br>or a role in mind?</h2><p>I'd be glad to connect about SDET, QA automation, and Java opportunities.</p><a class="button button-light" href="mailto:shubham.gsg03@yahoo.com?subject=Hello%20Shubham">Get in touch <span aria-hidden="true">↗</span></a><a class="contact-email" href="mailto:shubham.gsg03@yahoo.com">shubham.gsg03@yahoo.com</a></div></section>
+    <section class="contact-section" id="contact" aria-labelledby="contact-title"><div class="container contact-inner"><p class="section-kicker"><span class="classic-only">05</span><span class="interactive-only">06</span> / LET'S TALK</p><h2 id="contact-title">Have a quality challenge<br>or a role in mind?</h2><p>I'd be glad to connect about SDET, QA automation, and Java opportunities.</p><a class="button button-light" href="mailto:shubham.gsg03@yahoo.com?subject=Hello%20Shubham">Get in touch <span aria-hidden="true">↗</span></a><a class="contact-email" href="mailto:shubham.gsg03@yahoo.com">shubham.gsg03@yahoo.com</a></div></section>
   </main>
   <footer class="site-footer"><div class="container footer-inner"><a class="brand-mark" href="#top" aria-label="Back to top">SG<span>.</span></a><p>© <span id="year">2026</span> Shubham Gupta. Built with purpose.</p><div><a href="https://www.linkedin.com/in/shubhamgsg/" target="_blank" rel="noopener noreferrer">LinkedIn ↗</a><a href="https://github.com/shubhamgsg" target="_blank" rel="noopener noreferrer">GitHub ↗</a><a href="#top">Back to top ↑</a></div></div></footer>
   <script src="script.js" defer></script>
